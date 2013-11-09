@@ -1,4 +1,4 @@
-package com.br.crazy;
+package com.br.crazy.ui;
 
 import android.app.Activity;
 import android.os.Bundle;

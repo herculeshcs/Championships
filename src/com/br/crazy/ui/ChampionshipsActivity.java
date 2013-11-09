@@ -1,4 +1,6 @@
-package com.br.crazy;
+package com.br.crazy.ui;
+
+import com.br.crazy.R;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -12,7 +14,8 @@ public class ChampionshipsActivity extends Activity implements OnClickListener{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_championships);
+		setContentView(R.layout.championshipsview_layout);
+		
 	}
 
 	@Override
