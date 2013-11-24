@@ -17,9 +17,14 @@ import android.util.Log;
 import com.github.kevinsawicki.http.HttpRequest;
 import com.google.gson.Gson;
 
-public class ChampionshipRequester extends AsyncTask<String,String,Void> {
+public class ChampionshipRequester extends AsyncTask<String,String,String> {
 	private HttpRequest httpRequest;
-	void request (String url)
+	private ChampionshipListener l;
+	  public ChampionshipRequester(ChampionshipListener l)
+	  {
+		  this.l = l;
+	  }
+	String request (String url)
 	{
 			
 		HttpClient httpclient = new DefaultHttpClient();
@@ -41,17 +46,27 @@ public class ChampionshipRequester extends AsyncTask<String,String,Void> {
 		     
 			Log.i("peguei",responseBody);
 			Log.i("peguei",champ.getName());
+		return responseBody;
 		}
 		catch(Exception e)
 		{
 			Log.i("deu pau",e.getMessage());
 		}
-		
+		return "";
 	}
-	protected Void doInBackground(String...strings ) {
+	
+	protected void onPostExecute(String json)
+	{
+		l.listChampionShip(json);
+	}
+	protected String doInBackground(String...strings ) {
 		
-		request(strings[0]);
-		return null;
+		return request(strings[0]);
+	}
+	
+	public interface ChampionshipListener
+	{
+		public void listChampionShip(String json);
 	}
 
 }
