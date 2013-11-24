@@ -1,7 +1,5 @@
 package br.com.crazy.model;
 
-import java.util.List;
-
 public class SoccerChamp {
 	private int Id;
 	private String name;
@@ -9,6 +7,7 @@ public class SoccerChamp {
 	private int numberOfTeams;
 	private int playoffTeam;
 	private int userId;
+	
 	public int getId() {
 		return Id;
 	}
