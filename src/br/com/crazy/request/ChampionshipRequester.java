@@ -1,4 +1,4 @@
-package br.com.crazy.model;
+package br.com.crazy.request;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +13,7 @@ import org.apache.http.message.BasicNameValuePair;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import br.com.crazy.model.SoccerChamp;
 
 import com.github.kevinsawicki.http.HttpRequest;
 import com.google.gson.Gson;
@@ -44,8 +45,6 @@ public class ChampionshipRequester extends AsyncTask<String,String,String> {
 		     
 		   SoccerChamp champ =json.fromJson(responseBody, SoccerChamp.class);
 		     
-			Log.i("peguei",responseBody);
-			Log.i("peguei",champ.getName());
 		return responseBody;
 		}
 		catch(Exception e)
