@@ -1,11 +1,13 @@
 package br.com.crazy.model;
 
+import java.util.List;
+
 public class SoccerGroup {
 	private int Id;
 	private int champId;
 	private int number;
 	private int numberOfTeams;
-	
+	private List<SoccerGroupTeam> listSoccerGroupTeam;
 	public int getId() {
 		return Id;
 	}
@@ -29,6 +31,12 @@ public class SoccerGroup {
 	}
 	public void setNumberOfTeams(int numberOfTeams) {
 		this.numberOfTeams = numberOfTeams;
+	}
+	public List<SoccerGroupTeam> getListSoccerGroupTeam() {
+		return listSoccerGroupTeam;
+	}
+	public void setListSoccerGroupTeam(List<SoccerGroupTeam> listSoccerGroupTeam) {
+		this.listSoccerGroupTeam = listSoccerGroupTeam;
 	}
 	
 	

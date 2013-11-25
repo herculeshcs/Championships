@@ -1,5 +1,6 @@
 package br.com.crazy.model;
 
+
 public class SoccerGroupTeam {
 	private int Id;
 	private int groupId;
@@ -9,6 +10,7 @@ public class SoccerGroupTeam {
 	private int defeats;
 	private int draws;
 	private int goalsBalance;
+	private String teamName;
 	
 	public int getId() {
 		return Id;
@@ -58,6 +60,12 @@ public class SoccerGroupTeam {
 	public void setGoalsBalance(int goalsBalance) {
 		this.goalsBalance = goalsBalance;
 	}
-	
+	public String getTeamName() {
+		return teamName;
+	}
+	public void setTeamName(String teamName) {
+		this.teamName = teamName;
+	}
+
 	
 }

@@ -30,6 +30,10 @@
             android:name="br.com.crazy.ui.GroupsViewActivity"
             android:label="@string/app_name" >
         </activity>
+        <activity
+            android:name="br.com.crazy.ui.TeamGroupsViewActivity"
+            android:label="@string/app_name">
+            </activity>
     </application>
 
 </manifest>

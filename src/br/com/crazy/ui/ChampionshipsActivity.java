@@ -12,13 +12,15 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import com.br.crazy.R;
 import br.com.crazy.model.SoccerChamp;
+import br.com.crazy.model.SoccerGroup;
 import br.com.crazy.request.ChampionshipGroupsRequester;
 import br.com.crazy.request.ChampionshipGroupsRequester.GroupsFromChampListener;
 import br.com.crazy.request.ChampionshipRequester;
 import br.com.crazy.request.ChampionshipRequester.ChampionshipListener;
+import br.com.crazy.utils.Constantes;
 
-import com.br.crazy.R;
 import com.google.gson.Gson;
 
 public class ChampionshipsActivity extends ListActivity implements ChampionshipListener,GroupsFromChampListener{
@@ -31,13 +33,10 @@ public class ChampionshipsActivity extends ListActivity implements ChampionshipL
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		new ChampionshipRequester(this).execute(url);
+		new ChampionshipRequester(this).execute(Constantes.QUERYURL);
 		listStrings = new ArrayList<String>();
 		listChampionship = new HashMap<String,SoccerChamp>();
 		setContentView(R.layout.activity_championships);	
-		//listStrings.add("bla");
-		
-	 
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -47,23 +46,23 @@ public class ChampionshipsActivity extends ListActivity implements ChampionshipL
 	}
 	@Override
 	public void listChampionShip(String json) {
-		Gson j = new Gson();
-		SoccerChamp champ = j.fromJson(json, SoccerChamp.class);
-		listChampionship.put(champ.getName(),champ);
-		listStrings.add(champ.getName());
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,listStrings);
-	    setListAdapter(adapter);
-	     
+			Gson j = new Gson();
+			//SoccerChamp champ = j.fromJson(json, SoccerChamp.class);
+			java.lang.reflect.Type type = new com.google.gson.reflect.TypeToken<ArrayList<SoccerChamp>>() {}.getType();
+			List<SoccerChamp> champs  = j.fromJson(json, type);
+			for(int i=0;i< champs.size();i++){
+				listChampionship.put(champs.get(i).getName(),champs.get(i));
+				listStrings.add(champs.get(i).getName());
+			}
+			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,listStrings);
+		    setListAdapter(adapter);
 		}
 	 protected void onListItemClick(ListView l, View v, int position, long id) {
          
          super.onListItemClick(l, v, position, id);
          
-                    // ListView Clicked item index
-         	
-            // ListView Clicked item value
           String  itemValue    = (String) l.getItemAtPosition(position);
-          new ChampionshipGroupsRequester(this).execute(urlGroups,String.valueOf(listChampionship.get(itemValue).getId()));
+          new ChampionshipGroupsRequester(this).execute(Constantes.QUERYURL,String.valueOf(listChampionship.get(itemValue).getId()));
           Log.i("P",listChampionship.get(itemValue).getName());
           
             
@@ -72,6 +71,7 @@ public class ChampionshipsActivity extends ListActivity implements ChampionshipL
 	public void getGroupsFromRest(String json) {
 		// TODO Auto-generated method stub
 		Log.i("Grupos",json);
+		
 		Intent intent = new Intent(ChampionshipsActivity.this,GroupsViewActivity.class);
 		intent.putExtra("jsonGroups", json);
 		startActivity(intent);

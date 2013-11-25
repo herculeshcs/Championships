@@ -11,39 +11,39 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
-import android.os.AsyncTask;
-import android.util.Log;
 import br.com.crazy.model.SoccerChamp;
 
-import com.github.kevinsawicki.http.HttpRequest;
 import com.google.gson.Gson;
 
-public class ChampionshipRequester extends AsyncTask<String,String,String> {
-	private HttpRequest httpRequest;
-	private ChampionshipListener l;
-	  public ChampionshipRequester(ChampionshipListener l)
-	  {
-		  this.l = l;
-	  }
-	String request (String url)
+import android.os.AsyncTask;
+import android.util.Log;
+
+public class GroupsTeamRequester extends AsyncTask<String, Void, String> {
+
+	
+	private GroupTeamsListener l;
+	
+	public GroupsTeamRequester(GroupTeamsListener l)
 	{
-			
+		this.l = l;
+	}
+	private String request(String url, String id)
+	{
+		
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpPost httppost = new HttpPost(url);
 		try
 		{
 			List<BasicNameValuePair> nameValuePairs = new ArrayList<BasicNameValuePair>();
-			nameValuePairs.add(new BasicNameValuePair("queryName","Champs"));
-			nameValuePairs.add(new BasicNameValuePair("objectId","1"));
+			nameValuePairs.add(new BasicNameValuePair("queryName","SoccerTeams_And_SoccerGroupTeams_From_Group"));
+			nameValuePairs.add(new BasicNameValuePair("objectId",id));
 			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 	                // send the variable and value, in other words post, to the URL
 			
 			 ResponseHandler<String> responseHandler=new BasicResponseHandler();
 		     String responseBody = httpclient.execute(httppost, responseHandler);
 			//HttpResponse response = httpclient.execute(httppost);
-		     Log.i("peguei",responseBody);
-		 
-		     
+		     Log.i("GroupsTeamRequester",responseBody);
 		return responseBody;
 		}
 		catch(Exception e)
@@ -51,20 +51,18 @@ public class ChampionshipRequester extends AsyncTask<String,String,String> {
 			Log.i("deu pau",e.getMessage());
 		}
 		return "";
+
 	}
-	
+	@Override
+	protected String doInBackground(String... params) {
+		return request(params[0],params[1]);
+	}
 	protected void onPostExecute(String json)
 	{
-		l.listChampionShip(json);
+		l.getTeams(json);
 	}
-	protected String doInBackground(String...strings ) {
-		
-		return request(strings[0]);
-	}
-	
-	public interface ChampionshipListener
-	{
-		public void listChampionShip(String json);
+	public interface GroupTeamsListener{
+		public void  getTeams(String json);
 	}
 
 }
