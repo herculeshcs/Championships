@@ -5,6 +5,7 @@ public class SoccerPlayoffTeam {
 	private int playoffId;
 	private int teamId;
 	private int position;
+	private String teamName;
 	
 	public int getId() {
 		return Id;
@@ -29,6 +30,12 @@ public class SoccerPlayoffTeam {
 	}
 	public void setPosition(int position) {
 		this.position = position;
+	}
+	public String getTeamName() {
+		return teamName;
+	}
+	public void setTeamName(String teamName) {
+		this.teamName = teamName;
 	}
 	
 	

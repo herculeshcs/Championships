@@ -105,11 +105,11 @@ public class GroupsViewActivity extends ListActivity implements
 
 	@Override
 	public void getTeams(String json) {
-
 		if (!(json == null || json.isEmpty()||json.equals(" 0")||json.equals("0"))) {
 			Intent intent = new Intent(GroupsViewActivity.this,
 					TeamGroupsViewActivity.class);
 			intent.putExtra("jsonTeamGroups", json);
+			intent.putExtra("tipo","Team");
 			startActivity(intent);
 		} else {
 			criarDialogo();

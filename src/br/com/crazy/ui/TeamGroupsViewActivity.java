@@ -14,6 +14,9 @@ import android.view.View.OnTouchListener;
 import android.widget.TextView;
 import com.br.crazy.R;
 import br.com.crazy.model.SoccerGroupTeam;
+import br.com.crazy.model.SoccerMatch;
+import br.com.crazy.model.SoccerPlayoff;
+import br.com.crazy.model.SoccerPlayoffTeam;
 
 
 import com.google.gson.Gson;
@@ -24,23 +27,42 @@ OnTouchListener{
 	private static final int SWIPE_MAX_OFF_PATH = 250;
 	private static final int SWIPE_THRESHOLD_VELOCITY = 200;
 	List<SoccerGroupTeam> listTeam;
+	List<SoccerMatch> listMatch;
+	List<SoccerPlayoffTeam> listPlayoffTeams;
 	int team;
 	int size;
+	int layout;
 	private GestureDetector gestureDetector;
 	private View.OnTouchListener gestureListener;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		java.lang.reflect.Type type = new com.google.gson.reflect.TypeToken<ArrayList<SoccerGroupTeam>>() {}.getType();
-		Gson json = new Gson();
 		team=0;
-		listTeam = json.fromJson(getIntent().getStringExtra("jsonTeamGroups"), type);
-		setContentView(R.layout.team_layout);
-		setLayout(listTeam.get(0));
+		if(getIntent().getStringExtra("tipo").equals("Team"))
+		{
+			java.lang.reflect.Type type = new com.google.gson.reflect.TypeToken<ArrayList<SoccerGroupTeam>>() {}.getType();
+			Gson json = new Gson();
+	
+			listTeam = json.fromJson(getIntent().getStringExtra("jsonTeamGroups"), type);
+			setContentView(R.layout.team_layout);
+			setLayout(listTeam.get(0));
 		
-		Log.i("bla",listTeam.get(0).toString());
-		size=listTeam.size();
-		
+			Log.i("bla",listTeam.get(0).toString());
+			size=listTeam.size();
+			layout=1;
+		}
+		else
+		{
+			java.lang.reflect.Type type1 = new com.google.gson.reflect.TypeToken<ArrayList<SoccerMatch>>() {}.getType();
+			java.lang.reflect.Type type2 = new com.google.gson.reflect.TypeToken<ArrayList<SoccerPlayoffTeam>>() {}.getType();
+			Gson json = new Gson();
+			listTeam = json.fromJson(getIntent().getStringExtra("jsonTeam"), type2);
+			listMatch = json.fromJson(getIntent().getStringExtra("jsonMatch"), type1);
+			setContentView(R.layout.play_off_layout);
+			size = listMatch.size();
+			layout=0;
+			
+		}
 		View principal = (View) findViewById(R.id.scroll_view);
 		gestureDetector = new GestureDetector(this, new MyGestureDetector());
 		gestureListener = new View.OnTouchListener() {
@@ -68,6 +90,24 @@ OnTouchListener{
 	 setTextView(R.id.quantidade_vitorias,String.valueOf(team.getPosition()));
 	
 	}
+	void setMatchLayout(SoccerMatch match)
+	{
+		String name="";
+		String name2="";
+		for(int i =0;i < listTeam.size();i++)
+		{
+			if(listTeam.get(i).getId() == match.getTeamId1()){
+				name = listTeam.get(i).getTeamName();
+			}
+			if(listTeam.get(i).getId() == match.getTeamId2()){
+				name = listTeam.get(i).getTeamName();
+			}
+		}
+		setTextView(R.id.team_name,name);
+		setTextView(R.id.team_name2, name2);
+		setTextView(R.id.quantidade_pont,String.valueOf( match.getPoints1()));
+		setTextView(R.id.possicao,String.valueOf(match.getPoints2()));
+	}
 	void setTextView(int id, String text)
 	{
 		TextView t = (TextView) findViewById(id);
@@ -93,14 +133,30 @@ OnTouchListener{
 				// right to left swipe
 				if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE
 						&& Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-						team = (team+1)%size;
-						setLayout(listTeam.get(team));
+						if(layout==1)
+						{
+							team = (team+1)%size;
+							setLayout(listTeam.get(team));
+						}
+						else
+						{
+							team= (team+1)%size;
+							setMatchLayout(listMatch.get(team));
+						}
 					}
 				 else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE
-						&& Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-					 
-						team = (team+1)%size;
-						setLayout(listTeam.get(team));
+			
+						 && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+					 	if(layout==1)
+					 	{
+					 		team = (team+1)%size;
+					 		setLayout(listTeam.get(team));
+					 	}
+					 	else
+						{
+							team= (team+1)%size;
+							setMatchLayout(listMatch.get(team));
+						}
 					}
 
 
