@@ -4,6 +4,7 @@ public class SoccerChampTeam {
 	private int Id;
 	private int idChamp;
 	private int idTeam;
+	private int points;
 	
 	public int getId() {
 		return Id;
@@ -22,6 +23,12 @@ public class SoccerChampTeam {
 	}
 	public void setIdTeam(int idTeam) {
 		this.idTeam = idTeam;
+	}
+	public int getPoints() {
+		return points;
+	}
+	public void setPoints(int points) {
+		this.points = points;
 	}
 	
 	

@@ -48,9 +48,9 @@ public class GroupsTeamRequester extends AsyncTask<String, Void, String> {
 		}
 		catch(Exception e)
 		{
-			Log.i("deu pau",e.getMessage());
+	
+			return null;
 		}
-		return "";
 
 	}
 	@Override

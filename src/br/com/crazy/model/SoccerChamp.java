@@ -7,7 +7,7 @@ public class SoccerChamp {
 	private int numberOfTeams;
 	private int playoffTeam;
 	private int userId;
-	
+	private int situation;
 	public int getId() {
 		return Id;
 	}
@@ -43,5 +43,11 @@ public class SoccerChamp {
 	}
 	public void setUserId(int userId) {
 		this.userId = userId;
+	}
+	public int getSituation() {
+		return situation;
+	}
+	public void setSituation(int situation) {
+		this.situation = situation;
 	}
 }

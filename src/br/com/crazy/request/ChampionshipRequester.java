@@ -48,9 +48,9 @@ public class ChampionshipRequester extends AsyncTask<String,String,String> {
 		}
 		catch(Exception e)
 		{
-			Log.i("deu pau",e.getMessage());
+			return null;
 		}
-		return "";
+
 	}
 	
 	protected void onPostExecute(String json)

@@ -10,6 +10,8 @@ public class SoccerMatch {
 	private int teamId2;
 	private int points1;
 	private int points2;
+	private String teamName1;
+	private String teamName2;
 	
 	public int getId() {
 		return Id;
@@ -64,6 +66,18 @@ public class SoccerMatch {
 	}
 	public void setPoints2(int points2) {
 		this.points2 = points2;
+	}
+	public String getTeamName1() {
+		return teamName1;
+	}
+	public void setTeamName1(String teamName1) {
+		this.teamName1 = teamName1;
+	}
+	public String getTeamName2() {
+		return teamName2;
+	}
+	public void setTeamName2(String teamName2) {
+		this.teamName2 = teamName2;
 	}
 	
 	

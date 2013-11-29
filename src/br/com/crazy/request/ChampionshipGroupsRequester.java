@@ -49,9 +49,8 @@ public class ChampionshipGroupsRequester extends AsyncTask<String,Void, String> 
 		}
 		catch(Exception e)
 		{
-			Log.i("deu pau",e.getMessage());
+			return null;
 		}
-		return "";
 	}
 	@Override
 	protected String doInBackground(String... params) {
